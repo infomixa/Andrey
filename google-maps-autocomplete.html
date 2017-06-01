@@ -1,0 +1,162 @@
+<!DOCTYPE html><html>
+<div id="locationField">
+  <input id="autocomplete" placeholder="Enter your address" type="text">
+</div>
+
+<input class="field" id="street_number" disabled="true">
+<input class="field" id="route" disabled="true">
+<input class="field" id="locality" disabled="true">
+<input class="field" id="administrative_area_level_1" disabled="true">
+<input class="field" id="postal_code" disabled="true">
+
+
+
+
+
+<div class="special-info">
+ <div id="val">Estimated home value: $<span></span></div>
+ <div id="lo">Low Estimate: $<span></span></div>
+ <div id="hi">High Estimate: $<span></span></div>
+</div>
+<div class="special-info">
+ <div id="lsd">Last Sold Date: <span></span></div>
+ <div id="lsp">Last Sold Price: $<span></span></div>
+ <div id="beds">Bedrooms: <span></span></div>
+ <div id="baths">Bathrooms: <span></span></div>
+</div>
+<div id="no-data">No data found for your property</div>
+
+
+
+
+
+
+
+<!-- Replace the value of the key parameter with your own API key. -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3BASLanTRik25irkt95qEhMyENR9woOw&libraries=places&callback=initAutocomplete" async defer></script>
+
+<script>
+// This example requires the Places library. Include the libraries=places
+// parameter when you first load the API. For example:
+// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+var inputFieldID = "input_34_1";
+var placeSearch, autocomplete;
+var componentForm = {
+    street_number: "short_name",
+    route: "short_name",
+    locality: "short_name",
+    administrative_area_level_1: "short_name",
+    postal_code: "short_name"
+};
+
+function initAutocomplete() {
+    autocomplete = new google.maps.places.Autocomplete((document.getElementById(inputFieldID)));
+    autocomplete.addListener("place_changed", fillInAddress);
+}
+
+function fillInAddress() {
+    // Get the place details
+    var place = autocomplete.getPlace();
+
+    // clear existing values and enable inputs
+    // for (var component in componentForm) {
+    //     document.getElementById(component).value = "";
+    //     document.getElementById(component).disabled = false;
+    // }
+
+    // reset
+    var sn = "",
+        rt = "",
+        loc = "",
+        stat = "";
+
+    // Get each component of the address from the place details and fill the corresponding field on the form
+    // for (var i = 0; i < place.address_components.length; i++) {
+    //     var addressType = place.address_components[i].types[0];
+    //     if (componentForm[addressType]) {
+    //         var val = place.address_components[i][componentForm[addressType]];
+    //         document.getElementById(addressType).value = val;
+    //     }
+    // }
+    for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        if (addressType == "street_number") {
+            sn = place.address_components[i][componentForm["street_number"]];
+        }else if (addressType == "route") {
+            rt = place.address_components[i][componentForm["route"]];
+        }else if (addressType == "locality") {
+            loc = place.address_components[i][componentForm["locality"]];
+        }else if (addressType == "administrative_area_level_1") {
+            stat = place.address_components[i][componentForm["administrative_area_level_1"]];
+        }
+    }
+
+    jQuery("#input_34_2").val(sn+" "+rt);
+    jQuery("#input_34_3").val(loc+", "+stat);
+
+}
+
+</script>
+
+<script>
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+var mapdiv = jQuery("#mapdiv");
+var addr = getParameterByName("street")+" "+getParameterByName("citystate");
+var encoded = encodeURI(addr);
+mapdiv.html('<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB3BASLanTRik25irkt95qEhMyENR9woOw&q='+encoded+'" allowfullscreen></iframe>');
+
+
+var valsArr = ["val", "lo", "hi", "lsd", "lsp", "beds", "baths", "sqft"];
+
+var hasData = false;
+	
+for (i = 0; i < valsArr.length; i++) {
+
+	var theValue = getParameterByName(valsArr[i]);
+
+	if (theValue != "") {
+
+		jQuery("#"+valsArr[i]).css("display","block");
+		
+		if (valsArr[i] == "val" || valsArr[i] == "lo" || valsArr[i] == "hi" || valsArr[i] == "lsp") {
+			theValue = numberWithCommas(theValue);
+			hasData = true;
+		}
+
+		jQuery("#"+valsArr[i]+" span").html(theValue);
+		
+	}
+
+}
+	
+if (!hasData) {
+	jQuery("#no-data").css("display","block");
+	jQuery("#input_35_7").val("true");
+}
+
+jQuery(document).bind("gform_confirmation_loaded", function(){
+    jQuery(".special-info").css("display","block");
+	jQuery("html,body").scrollTop(0);
+	ga("send", "event", "Home Valuation Lead");
+	fbq("track", "CompleteRegistration", {
+		content_name: "Home Valuation Lead"
+    });
+});
+
+</script>
+
+</html>
