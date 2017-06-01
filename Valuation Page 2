@@ -29,5 +29,6 @@
 <div id="sqft">Square Feet: <span></span></div>
 <div id="lsd">Last Sold Date: <span></span></div>
 <div id="lsp">Last Sold Price: $<span></span></div>
-<div id="no-data">No data found for your property. We however will manually do an analysis and email you a valuation report shortly.</div>
+<div id="no-data">Thank you for your interest! Our home evaluation tool pulls in data from past property records to provide you with a estimate value of your property.
+We weren’t able to find an automated valuation for the address entered. Please Contact Andrey Gulyy directly for an in-depth review of your home’s value.</div>
 </div>
