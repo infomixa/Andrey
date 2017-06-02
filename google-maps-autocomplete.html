@@ -13,6 +13,7 @@
 
 
 
+<!--
 <div class="special-info">
  <div id="val">Estimated home value: $<span></span></div>
  <div id="lo">Low Estimate: $<span></span></div>
@@ -25,9 +26,50 @@
  <div id="baths">Bathrooms: <span></span></div>
 </div>
 <div id="no-data">No data found for your property</div>
+-->
+
+<!--   PAGE 2   -->
+
+<div class="eval-title">Evaluation for the property: <span id="addr-big"></span></div>
+
+<div class="special-info">
+	<div id="meter-fill"></div>
+	<figcaption class="meter-labels">
+		<div class="text1">
+			<div id="lo">$<span></span></div>
+			<span class="text-1">Low Estimate</span>
+		</div>
+		<div class="text2">
+			<div id="val">$<span></span></div>
+			<span class="text-1">Estimated Home Value</span>
+		</div>
+		<div class="text3">
+			<div id="hi">$<span></span></div>
+			<span class="text-1">High Estimate</span>
+		</div>
+	</figcaption>
+	<div id="beds">Bedrooms: <span></span></div>
+	<div id="baths">Bathrooms: <span></span></div>
+	<div id="sqft">Square Feet: <span></span></div>
+	<div id="lsd">Last Sold Date: <span></span></div>
+	<div id="lsp">Last Sold Price: $<span></span></div>
+	<div id="no-data">
+		<p>Thank you for your interest! Our home evaluation tool pulls in data from past property records to provide you with a estimate value of your property.</p>
+		<p>We weren&#8217;t able to find an automated valuation for the address entered. Please <a href="https://andreygulyy.com/contact/">Contact Andrey Gulyy</a> directly for an in-depth review of your home&#8217;s value.</p>
+	</div>
+</div>
 
 
-
+<!-- page 2 -->
+<style>
+.special-info, .special-info > div, .special-info-challenge, #no-data {
+display:none;
+}
+#gforms_confirmation_message_36 {
+    margin-top: 30px;
+    text-align: center;
+}
+</style>
 
 
 
@@ -35,7 +77,7 @@
 <!-- Replace the value of the key parameter with your own API key. -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3BASLanTRik25irkt95qEhMyENR9woOw&libraries=places&callback=initAutocomplete" async defer></script>
 
-<script>
+<script> // first page
 // This example requires the Places library. Include the libraries=places
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
@@ -99,7 +141,7 @@ function fillInAddress() {
 
 </script>
 
-<script>
+<script> // second page
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -119,6 +161,7 @@ var addr = getParameterByName("street")+" "+getParameterByName("citystate");
 var encoded = encodeURI(addr);
 mapdiv.html('<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB3BASLanTRik25irkt95qEhMyENR9woOw&q='+encoded+'" allowfullscreen></iframe>');
 
+jQuery("#addr-big").html(addr);
 
 var valsArr = ["val", "lo", "hi", "lsd", "lsp", "beds", "baths", "sqft"];
 
@@ -148,13 +191,29 @@ if (!hasData) {
 	jQuery("#input_35_7").val("true");
 }
 
+var aFormSubmitted = false;
+	
 jQuery(document).bind("gform_confirmation_loaded", function(){
-    jQuery(".special-info").css("display","block");
-	jQuery("html,body").scrollTop(0);
-	ga("send", "event", "Home Valuation Lead");
-	fbq("track", "CompleteRegistration", {
-		content_name: "Home Valuation Lead"
-    });
+	if (!aFormSubmitted) {
+		jQuery(".special-info, .special-info-challenge").css("display","block");
+		jQuery("html,body").scrollTop(0);
+		ga("send", "event", "Home Valuation Lead");
+		fbq("track", "CompleteRegistration", {
+			content_name: "Home Valuation Lead"
+		});
+	}
+	aFormSubmitted = true;
+});
+
+
+jQuery("#input_35_8").change(function() { // name
+	jQuery("#input_36_2").val(jQuery("#input_35_8").val());
+});
+jQuery("#input_35_5").change(function() { // email
+	jQuery("#input_36_4").val(jQuery("#input_35_5").val());
+});
+jQuery("#input_35_9").change(function() { // phone
+	jQuery("#input_36_5").val(jQuery("#input_35_9").val());
 });
 
 </script>
