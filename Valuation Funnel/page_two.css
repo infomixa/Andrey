@@ -1,0 +1,123 @@
+#mapdiv {
+    max-width: 93%;
+    height: 350px;
+    margin: auto;
+}
+
+#mapdiv iframe, .special-info {
+    width: 100%;
+}
+
+.eval-title {
+    margin: 5px 0 20px;
+}
+
+label.gfield_label {
+    display: block !important;
+}
+
+#form-section {
+    margin-top: -23px !important;
+    margin-bottom: -20px !important;
+}
+
+#gform_submit_button_35, #gform_submit_button_36 {
+    background: #3fb109;
+    text-align: center;
+}
+
+.eval-title, #street, #citystate {
+    display: inline-block !important;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.data {
+    display: inline-block !important;
+     margin-top: 3%;
+}
+
+#street:after {
+    content: ",";
+}
+
+#meter-fill { 
+    height: 25px;
+    border-radius: 3px;
+    background-color: #bbb;
+    background: linear-gradient(to left,red,blue);
+    background-repeat: repeat-x;
+    box-shadow: 0 0 10px black;
+    display: block !important;
+    width: 100%;
+    margin: auto;
+}
+
+
+.text1, .text2, .text3 {
+    width: 33.33%;
+    display: inline-block;
+    letter-spacing: normal;
+    word-spacing: normal;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+.text1 {
+	 float: left;
+
+	}
+
+.text3 {
+    text-align: right;
+    float: right;
+}
+.text2 {
+    text-align: center;
+}
+
+.text-1 {
+    font-family: Gotham,gotham,Verdana,sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #333;
+}
+.text-2 {
+    letter-spacing: -.31em;
+    width: 85vw;
+    margin: auto;
+}
+.meter-labels {
+    display: block;
+        margin: 10px 0;
+}
+
+#val {
+    font-size: 28px;
+}
+
+#lo, #hi {
+    font-size: 20px;
+}
+
+.alert {
+    padding: 20px;
+    background-color: #ffdddd;
+    color: white;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
